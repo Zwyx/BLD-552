@@ -1,0 +1,256 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #21252b;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.checkbox {
+  position: relative;
+  margin: 32px 64px;
+}
+
+.checkbox > input {
+  opacity: 0;
+}
+
+.checkbox > label {
+  font-size: 22px;
+  color: #abb2bf;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox > label::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: -20px;
+  height: 22px;
+  width: 22px;
+  margin: 4px;
+  border: 2px solid #61afefaa;
+  border-radius: 3px;
+  transition: transform 0.28s ease;
+}
+
+.checkbox > label::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: -9px;
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid #61afefaa;
+  border-left: 2px solid #61afefaa;
+  transform: rotate(-45deg) scale(0);
+  transition: transform ease 0.15s;
+}
+
+.checkbox > input:checked + label::after {
+  transform: rotate(-45deg) scale(1);
+}
+
+.checkbox > input:focus + label::before {
+  box-shadow: 0px 0px 5px 1px #61afef;
+}
+
+.checkboxes {
+  margin-left: 96px;
+  display: flex;
+}
+
+.clues {
+  margin: 32px;
+  font-family: sans-serif;
+  color: #abb2bf;
+  user-select: none;
+}
+
+.cluesWhite {
+  color: #f0f0f0aa;
+}
+
+.cluesOrange {
+  color: #c99535aa;
+}
+
+.cluesGreen {
+  color: #64dc96aa;
+}
+
+.cluesRed {
+  color: #e06c75aa;
+}
+
+.cluesBlue {
+  color: #61afefaa;
+}
+
+.cluesYellow {
+  color: #e3f02aaa;
+}
+
+.face {
+  position: relative;
+  height: 210px;
+  width: 210px;
+  margin: 32px;
+  border-radius: 3px;
+}
+
+.white {
+  background-color: #f0f0f0aa;
+}
+
+.orange {
+  background-color: #c99535aa;
+}
+
+.green {
+  background-color: #64dc96aa;
+}
+
+.red {
+  background-color: #e06c75aa;
+}
+
+.blue {
+  background-color: #61afefaa;
+}
+
+.yellow {
+  background-color: #e3f02aaa;
+}
+
+.horizontal {
+  position: absolute;
+  top: 69px;
+  left: 0;
+  right: 0;
+  height: 69px;
+  border-top: 2px solid #21252b;
+  border-bottom: 2px solid #21252b;
+}
+
+.vertical {
+  position: absolute;
+  top: 0;
+  left: 69px;
+  bottom: 0;
+  width: 69px;
+  border-left: 2px solid #21252b;
+  border-right: 2px solid #21252b;
+}
+
+.dot {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  background-color: #282c34;
+  transform: translate(-10px, -10px);
+}
+
+.tl,
+.tm,
+.tr {
+  top: 35px;
+}
+
+.ml,
+.mr {
+  top: 105px;
+}
+
+.bl,
+.bm,
+.br {
+  top: 175px;
+}
+
+.tl,
+.ml,
+.bl {
+  left: 35px;
+}
+
+.tm,
+.bm {
+  left: 105px;
+}
+
+.tr,
+.mr,
+.br {
+  left: 175px;
+}
+
+.field {
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 8px;
+  background-color: #282c34;
+  font-size: larger;
+  text-align: center;
+  font-variant: small-caps;
+  color: #abb2bf;
+  caret-color: black;
+}
+
+.field:focus {
+  border: 1px solid black;
+}
+
+/* .right {
+  animation: animationRight 0.35s ease;
+}
+
+@keyframes animationRight {
+  0% {
+    background-color: #64dc96aa;
+  }
+} */
+
+.wrong {
+  animation: animationWrong 0.35s ease;
+}
+
+@keyframes animationWrong {
+  0% {
+    background-color: #e06c75aa;
+  }
+}

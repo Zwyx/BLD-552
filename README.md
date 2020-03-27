@@ -1,2 +1,5 @@
 # BLD-552
-Training for Blindfolded Cube Solving
+
+Training utilities for solving the Rubik's Cube blindfolded.
+
+1. Remembering letter positions
