@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #21252b;
   min-height: 100vh;
@@ -24,22 +13,11 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .checkbox {
   position: relative;
-  margin: 32px 64px;
+  margin: 32px;
+  min-width: 100px;
+  text-align: left;
 }
 
 .checkbox > input {
@@ -47,6 +25,7 @@
 }
 
 .checkbox > label {
+  padding: 8px 16px 8px 40px;
   font-size: 22px;
   color: #abb2bf;
   cursor: pointer;
@@ -57,7 +36,7 @@
   content: "";
   position: absolute;
   top: 4px;
-  left: -20px;
+  left: 20px;
   height: 22px;
   width: 22px;
   margin: 4px;
@@ -70,7 +49,7 @@
   content: "";
   position: absolute;
   top: 16px;
-  left: -9px;
+  left: 31px;
   width: 10px;
   height: 5px;
   border-bottom: 2px solid #61afefaa;
@@ -88,38 +67,44 @@
 }
 
 .checkboxes {
-  margin-left: 96px;
+  margin-left: 72px;
   display: flex;
 }
 
 .clues {
+  opacity: 0;
   margin: 32px;
   font-family: sans-serif;
   color: #abb2bf;
   user-select: none;
+  transition: opacity 0.15s ease;
 }
 
-.cluesWhite {
+.clues.visible {
+  opacity: 1;
+}
+
+.clues .white {
   color: #f0f0f0aa;
 }
 
-.cluesOrange {
+.clues .orange {
   color: #c99535aa;
 }
 
-.cluesGreen {
+.clues .green {
   color: #64dc96aa;
 }
 
-.cluesRed {
+.clues .red {
   color: #e06c75aa;
 }
 
-.cluesBlue {
+.clues .blue {
   color: #61afefaa;
 }
 
-.cluesYellow {
+.clues .yellow {
   color: #e3f02aaa;
 }
 
@@ -131,31 +116,31 @@
   border-radius: 3px;
 }
 
-.white {
+.face.white {
   background-color: #f0f0f0aa;
 }
 
-.orange {
+.face.orange {
   background-color: #c99535aa;
 }
 
-.green {
+.face.green {
   background-color: #64dc96aa;
 }
 
-.red {
+.face.red {
   background-color: #e06c75aa;
 }
 
-.blue {
+.face.blue {
   background-color: #61afefaa;
 }
 
-.yellow {
+.face.yellow {
   background-color: #e3f02aaa;
 }
 
-.horizontal {
+.face .horizontal {
   position: absolute;
   top: 69px;
   left: 0;
@@ -165,7 +150,7 @@
   border-bottom: 2px solid #21252b;
 }
 
-.vertical {
+.face .vertical {
   position: absolute;
   top: 0;
   left: 69px;
@@ -175,7 +160,7 @@
   border-right: 2px solid #21252b;
 }
 
-.dot {
+.face .dot {
   position: absolute;
   height: 20px;
   width: 20px;
@@ -184,37 +169,37 @@
   transform: translate(-10px, -10px);
 }
 
-.tl,
-.tm,
-.tr {
+.face .dot.tl,
+.face .dot.tm,
+.face .dot.tr {
   top: 35px;
 }
 
-.ml,
-.mr {
+.face .dot.ml,
+.face .dot.mr {
   top: 105px;
 }
 
-.bl,
-.bm,
-.br {
+.face .dot.bl,
+.face .dot.bm,
+.face .dot.br {
   top: 175px;
 }
 
-.tl,
-.ml,
-.bl {
+.face .dot.tl,
+.face .dot.ml,
+.face .dot.bl {
   left: 35px;
 }
 
-.tm,
-.bm {
+.face .dot.tm,
+.face .dot.bm {
   left: 105px;
 }
 
-.tr,
-.mr,
-.br {
+.face .dot.tr,
+.face .dot.mr,
+.face .dot.br {
   left: 175px;
 }
 
@@ -235,7 +220,7 @@
   border: 1px solid black;
 }
 
-/* .right {
+/* .field.right {
   animation: animationRight 0.35s ease;
 }
 
@@ -245,7 +230,7 @@
   }
 } */
 
-.wrong {
+.field.wrong {
   animation: animationWrong 0.35s ease;
 }
 
@@ -253,4 +238,12 @@
   0% {
     background-color: #e06c75aa;
   }
+}
+
+.score {
+  margin: 32px;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #abb2bf;
+  user-select: none;
 }

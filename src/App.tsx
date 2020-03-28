@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
 const EDGES = {
@@ -113,9 +113,18 @@ const Field: React.FC<{
 const App: React.FC = () => {
   const [edges, setEdges] = useState<boolean>(true);
   const [corners, setCorners] = useState<boolean>(false);
+  const [clues, setClues] = useState<boolean>(true);
   const [position, setPosition] = useState<keyof typeof BOTH>();
   const [letter, setLetter] = useState<string>("");
   const [verdict, setVerdict] = useState<"right" | "wrong">();
+  const [score, setScore] = useState<number>(0);
+  const [bestScore, setBestScore] = useState<number>(0);
+
+  useEffect(() => {
+    try {
+      setBestScore(parseInt(localStorage.getItem("bestScore") || "0"));
+    } catch {}
+  }, []);
 
   const changePosition = useCallback(() => {
     let newPosition: keyof typeof BOTH;
@@ -137,15 +146,29 @@ const App: React.FC = () => {
   useEffect(() => {
     if (position && letter.toUpperCase() === BOTH[position]) {
       setVerdict("right");
+
+      const newScore = score + 1;
+
+      setScore(newScore);
+
+      if (newScore > bestScore) {
+        setBestScore(newScore);
+        try {
+          localStorage.setItem("bestScore", newScore.toString());
+        } catch {}
+      }
+
       changePosition();
     } else if (letter) {
       setVerdict("wrong");
+
+      setScore(0);
     }
 
     setLetter("");
 
     setTimeout(() => setVerdict(undefined), 350);
-  }, [position, letter, changePosition]);
+  }, [position, letter, score, bestScore, changePosition]);
 
   useEffect(changePosition, [edges, corners]);
 
@@ -165,6 +188,7 @@ const App: React.FC = () => {
               }
             }}
           />
+
           <Checkbox
             id="checkboxCorners"
             label="Corners"
@@ -177,20 +201,27 @@ const App: React.FC = () => {
               }
             }}
           />
+
+          <Checkbox
+            id="checkboxClues"
+            label="Clues"
+            checked={clues}
+            onCheckChange={checked => setClues(checked)}
+          />
         </div>
 
-        <div className="clues">
-          <span className="cluesWhite">A</span>
+        <div className={"clues" + (clues ? " visible" : "")}>
+          <span className="white">A</span>
           {"          "}
-          <span className="cluesOrange">E</span>
+          <span className="orange">E</span>
           {"          "}
-          <span className="cluesGreen">I</span>
+          <span className="green">I</span>
           {"          "}
-          <span className="cluesRed">M</span>
+          <span className="red">M</span>
           {"          "}
-          <span className="cluesBlue">Q</span>
+          <span className="blue">Q</span>
           {"          "}
-          <span className="cluesYellow">U</span>
+          <span className="yellow">U</span>
         </div>
 
         <Face
@@ -203,6 +234,10 @@ const App: React.FC = () => {
           className={verdict}
           onTextChange={text => setLetter(text)}
         />
+
+        <div className="score">
+          {score}     •     {bestScore}
+        </div>
       </header>
     </div>
   );
