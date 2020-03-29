@@ -6,7 +6,8 @@ export const Checkbox: React.FC<{
   label?: string;
   checked?: boolean;
   onCheckChange: (checked: boolean) => void;
-}> = ({ id, label, checked, onCheckChange }) => {
+  onKeyPress?: (key: string) => void;
+}> = ({ id, label, checked, onCheckChange, onKeyPress }) => {
   return (
     <div className={style.checkbox}>
       <input
@@ -14,6 +15,7 @@ export const Checkbox: React.FC<{
         type="checkbox"
         checked={checked}
         onChange={e => onCheckChange(e.currentTarget.checked)}
+        onKeyPress={onKeyPress && (e => onKeyPress(e.key))}
       />
       <label htmlFor={id}>{label}</label>
     </div>
@@ -33,18 +35,23 @@ export const CubeFace: React.FC<{
   );
 };
 
-export const Textbox: React.FC<{
-  text?: string;
-  className?: string;
-  onTextChange: (text: string) => void;
-}> = ({ text, className, onTextChange }) => {
-  console.log(className);
+export type TextboxRef = HTMLInputElement;
+
+export const Textbox = React.forwardRef<
+  TextboxRef,
+  {
+    text?: string;
+    className?: string;
+    onTextChange: (text: string) => void;
+  }
+>(({ text, className, onTextChange }, ref) => {
   return (
     <input
+      ref={ref}
       className={style.textbox + (className ? ` ${className}` : "")}
       value={text}
       autoFocus
       onChange={e => onTextChange(e.currentTarget.value)}
     />
   );
-};
+});
