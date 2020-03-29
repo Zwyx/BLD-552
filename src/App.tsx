@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./App.css";
+import style from "./App.module.scss";
+import { Checkbox, CubeFace, Textbox } from "./Ui";
 
 const EDGES = {
   "white-tm": "A",
@@ -62,53 +63,6 @@ const EDGE_KEYS = Object.keys(EDGES) as Array<keyof typeof EDGES>;
 const CORNER_KEYS = Object.keys(CORNERS) as Array<keyof typeof CORNERS>;
 
 const BOTH_KEYS = Object.keys(BOTH) as Array<keyof typeof BOTH>;
-
-const Checkbox: React.FC<{
-  id: string;
-  label?: string;
-  checked?: boolean;
-  onCheckChange: (checked: boolean) => void;
-}> = ({ id, label, checked, onCheckChange }) => {
-  return (
-    <div className="checkbox">
-      <input
-        id={id}
-        type="checkbox"
-        checked={checked}
-        onChange={e => onCheckChange(e.currentTarget.checked)}
-      />
-      <label htmlFor={id}>{label}</label>
-    </div>
-  );
-};
-
-const Face: React.FC<{
-  color?: string;
-  position?: string;
-}> = ({ color, position }) => {
-  return (
-    <div className={"face" + (color ? ` ${color}` : "")}>
-      <div className="horizontal" />
-      <div className="vertical"></div>
-      <div className={"dot" + (position ? ` ${position}` : "")} />
-    </div>
-  );
-};
-
-const Field: React.FC<{
-  text?: string;
-  className?: string;
-  onTextChange: (text: string) => void;
-}> = ({ text, className, onTextChange }) => {
-  return (
-    <input
-      className={"field" + (className ? ` ${className}` : "")}
-      value={text}
-      autoFocus
-      onChange={e => onTextChange(e.currentTarget.value)}
-    />
-  );
-};
 
 const App: React.FC = () => {
   const [edges, setEdges] = useState<boolean>(true);
@@ -173,72 +127,67 @@ const App: React.FC = () => {
   useEffect(changePosition, [edges, corners]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="checkboxes">
-          <Checkbox
-            id="checkboxEdges"
-            label="Edges"
-            checked={edges}
-            onCheckChange={checked => {
-              setEdges(checked);
+    <div className={style.app}>
+      <div className={style.checkboxes}>
+        <Checkbox
+          id="checkboxEdges"
+          label="Edges"
+          checked={edges}
+          onCheckChange={checked => {
+            setEdges(checked);
 
-              if (!checked && !corners) {
-                setCorners(true);
-              }
-            }}
-          />
-
-          <Checkbox
-            id="checkboxCorners"
-            label="Corners"
-            checked={corners}
-            onCheckChange={checked => {
-              setCorners(checked);
-
-              if (!checked && !edges) {
-                setEdges(true);
-              }
-            }}
-          />
-
-          <Checkbox
-            id="checkboxClues"
-            label="Clues"
-            checked={clues}
-            onCheckChange={checked => setClues(checked)}
-          />
-        </div>
-
-        <div className={"clues" + (clues ? " visible" : "")}>
-          <span className="white">A</span>
-          {"          "}
-          <span className="orange">E</span>
-          {"          "}
-          <span className="green">I</span>
-          {"          "}
-          <span className="red">M</span>
-          {"          "}
-          <span className="blue">Q</span>
-          {"          "}
-          <span className="yellow">U</span>
-        </div>
-
-        <Face
-          color={position && position.slice(0, -3)}
-          position={position && position.slice(-2)}
+            if (!checked && !corners) {
+              setCorners(true);
+            }
+          }}
         />
 
-        <Field
+        <Checkbox
+          id="checkboxCorners"
+          label="Corners"
+          checked={corners}
+          onCheckChange={checked => {
+            setCorners(checked);
+
+            if (!checked && !edges) {
+              setEdges(true);
+            }
+          }}
+        />
+
+        <Checkbox
+          id="checkboxClues"
+          label="Clues"
+          checked={clues}
+          onCheckChange={checked => setClues(checked)}
+        />
+      </div>
+
+      <div className={style.clues + (clues ? ` ${style.visible}` : "")}>
+        <span className={style.white}>A</span>
+        <span className={style.orange}>E</span>
+        <span className={style.green}>I</span>
+        <span className={style.red}>M</span>
+        <span className={style.blue}>Q</span>
+        <span className={style.yellow}>U</span>
+      </div>
+
+      <CubeFace
+        color={position && position.slice(0, -3)}
+        position={position && position.slice(-2)}
+      />
+
+      <div className={style.field}>
+        <Textbox
           text={letter}
-          className={verdict}
+          className={verdict ? style[verdict] : undefined}
           onTextChange={text => setLetter(text)}
         />
+      </div>
 
-        <div className="score">
-          {score}     •     {bestScore}
-        </div>
-      </header>
+      <div className={style.score}>
+        {score}     •     {bestScore}
+      </div>
     </div>
   );
 };
